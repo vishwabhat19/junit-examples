@@ -5,12 +5,17 @@ import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.*;
 
+@DisplayName("When running MathUtils")
 class MathUtilsTest
 {
 	MathUtils mathUtils;
+	TestInfo testInfo;
+	TestReporter testReporter;
 
 	@BeforeEach
-	void init() {
+	void init(TestInfo testInfo, TestReporter testReporter) {
+		this.testInfo = testInfo;
+		this.testReporter = testReporter;
 		mathUtils = new MathUtils();
 	}
 
@@ -20,28 +25,32 @@ class MathUtilsTest
 	}
 
 	@Nested
+	@DisplayName("add method")
+	@Tag("Math")
 	class AddTest {
 		@Test
-		@DisplayName("Testing add method for +")
+		@DisplayName("when adding two positive numbers")
 		void testAddPositive()
 		{
-			assertEquals(2, mathUtils.add(1,1), "This method should add two numbers!");
+			assertEquals(2, mathUtils.add(1,1), "returns the right sum");
 		}
 
 		@Test
-		@DisplayName("Testing add method for -")
+		@DisplayName("when adding two negative numbers")
 		void testAddNegative()
 		{
-			assertEquals(-2, mathUtils.add(-1,-1), "This method should add two numbers!");
+			assertEquals(-2, mathUtils.add(-1,-1), "returns the right sum");
 		}
 	}
 
 	@Test
+	@Tag("Circle")
 	void testComputeCircleArea() {
 		assertEquals(314.1592653589793, mathUtils.computeCircleArea(10), "Should return right circle area!");
 	}
 
 	@Test
+	@Tag("Math")
 	void testDivide() {
 
 		assertThrows(ArithmeticException.class, () -> {mathUtils.divide(10, 0);});
@@ -49,9 +58,10 @@ class MathUtilsTest
 
 	@Test
 	@DisplayName("Multiply Method")
+	@Tag("Math")
 	void testMultiply()
 	{
-		//assertEquals(6, mathUtils.multiply(2,3));
+		testReporter.publishEntry("Running "+testInfo.getDisplayName()+" with tags "+testInfo.getTags());
 		assertAll(
 				() -> assertEquals(6, mathUtils.multiply(2,3)),
 				() -> assertEquals(4, mathUtils.multiply(2,2)),
