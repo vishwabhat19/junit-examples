@@ -62,6 +62,7 @@ class MathUtilsTest
 	void testMultiply()
 	{
 		testReporter.publishEntry("Running "+testInfo.getDisplayName()+" with tags "+testInfo.getTags());
+		//Only returns true if all the assertEquals pass
 		assertAll(
 				() -> assertEquals(6, mathUtils.multiply(2,3)),
 				() -> assertEquals(4, mathUtils.multiply(2,2)),
