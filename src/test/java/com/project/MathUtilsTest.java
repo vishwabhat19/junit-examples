@@ -1,23 +1,26 @@
 package com.project;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assumptions.*;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class MathUtilsTest
 {
 	MathUtils mathUtils;
 
-	@BeforeAll
+	@BeforeEach
 	void init() {
 		mathUtils = new MathUtils();
 	}
 
+	@AfterEach
+	void cleanup() {
+		System.out.println("Cleaning up...");
+	}
+
 	@Test
+	@DisplayName("Testing add method")
 	void testAdd()
 	{
 		int expected = 2;
@@ -32,7 +35,19 @@ class MathUtilsTest
 
 	@Test
 	void testDivide() {
+
 		assertThrows(ArithmeticException.class, () -> {mathUtils.divide(10, 0);});
 	}
 
+	@Test
+	@DisplayName("Multiply Method")
+	void testMultiply()
+	{
+		//assertEquals(6, mathUtils.multiply(2,3));
+		assertAll(
+				() -> assertEquals(6, mathUtils.multiply(2,3)),
+				() -> assertEquals(4, mathUtils.multiply(2,2)),
+				() -> assertEquals(4, mathUtils.multiply(-2,-2))
+		);
+	}
 }
