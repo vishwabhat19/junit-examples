@@ -19,13 +19,21 @@ class MathUtilsTest
 		System.out.println("Cleaning up...");
 	}
 
-	@Test
-	@DisplayName("Testing add method")
-	void testAdd()
-	{
-		int expected = 2;
-		int actual = mathUtils.add(1,1);
-		assertEquals(expected, actual, "This method should add two numbers!");
+	@Nested
+	class AddTest {
+		@Test
+		@DisplayName("Testing add method for +")
+		void testAddPositive()
+		{
+			assertEquals(2, mathUtils.add(1,1), "This method should add two numbers!");
+		}
+
+		@Test
+		@DisplayName("Testing add method for -")
+		void testAddNegative()
+		{
+			assertEquals(-2, mathUtils.add(-1,-1), "This method should add two numbers!");
+		}
 	}
 
 	@Test
